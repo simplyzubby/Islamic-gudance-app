@@ -1,11 +1,24 @@
+import { useEffect, useState } from "react";
+import { getAyah } from "../services/api";
+import AyahCard from "../components/AyahCard";
+
 function Dashboard() {
+  const [ayah, setAyah] = useState(null);
+
+  useEffect(() => {
+    const fetchAyah = async () => {
+      const data = await getAyah();
+      setAyah(data);
+    };
+
+    fetchAyah();
+  }, []);
+
   return (
     <div>
-      <h2>Assalamu Alaikum</h2>
-      <p>Ayah of the Day</p>
-      <blockquote>
-        “Indeed, in the remembrance of Allah do hearts find rest.” (Qur’an 13:28)
-      </blockquote>
+      <h1>Daily Guidance</h1>
+
+      {ayah && <AyahCard ayah={ayah} />}
     </div>
   );
 }
